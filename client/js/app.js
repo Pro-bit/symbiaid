@@ -46,12 +46,18 @@ angular
       //   url: '/logout',
       //   controller: 'AuthLogoutController'
       // })
-      // .state('my-reviews', {
-      //   url: '/my-reviews',
-      //   templateUrl: 'views/my-reviews.html',
-      //   controller: 'MyReviewsController',
-      //   authenticate: true
-      // })
+      .state('edit-service', {
+        url: '/edit-service/:id',
+        templateUrl: 'views/add-service.html',
+        controller: 'EditServiceController',
+        authenticate: true
+      })
+      .state('add-service', {
+        url: '/add-service',
+        templateUrl: 'views/add-service.html',
+        controller: 'AddServiceController',
+        authenticate: true
+      })
       .state('sign-up', {
         url: '/sign-up',
         templateUrl: 'views/sign-up-form.html',

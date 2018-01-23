@@ -31,6 +31,7 @@
         <ul>
           <li ng-repeat="service in SYBServices track by $index">
             <div ng-bind="service.Name"></div>
+            <div ng-bind="service.id"></div>
             <div ng-bind="service.Description"></div>
             <div><span ng-bind="service.Price"></span>eth</div>
           </li>
