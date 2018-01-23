@@ -19,16 +19,6 @@ angular
     this.contractJson = null;
     this.SYBContract = null;
 
-    this.init = function() {
-      var def = $q.defer();
-      var self=this;
-      $http.get('SYBContract.json').success(function(response) {
-        self.contractJson = response;
-
-        self.SYBContract = self.web3.eth.contract(self.contractJson.abi).at("0x554f74026b96e96bc8b4012e6e01f2a02c84b134");
-      });
-    }
-
     this.getSYBContract = function() {
       var def = $q.defer();
 
@@ -39,7 +29,7 @@ angular
         $http.get('SYBContract.json').success(function(response) {
           this.contractJson = response;
   
-          this.SYBContract = this.web3.eth.contract(this.contractJson.abi).at("0x554f74026b96e96bc8b4012e6e01f2a02c84b134");
+          this.SYBContract = this.web3.eth.contract(this.contractJson.abi).at("0x1dFFEA5b11C389986C6ceb65090bf3dF300EC9bC");
 
           def.resolve(this.SYBContract);
         });
@@ -47,7 +37,4 @@ angular
 
       return def.promise;
     }
-
-
-    this.init();
   }]);
