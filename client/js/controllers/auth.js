@@ -24,6 +24,8 @@ angular
 				address: ''
 			};
 
+			$scope.errMessage = "";
+
 			// check if metamask is installed and address created
 			if (ContractService.web3 == null)
 				$scope.installMetaMask = true;
@@ -37,9 +39,14 @@ angular
 				if(registerForm.form('is valid')) {
 					$scope.isRegistering = true;
 					AuthService.register($scope.user)
-						.then(function () {
-							$scope.isRegistering = false;
-							$state.transitionTo('index');
+						.then(function (err, res) {
+							// check if error occurs
+							if (err) {
+								$scope.errMessage = err.message;
+								$scope.isRegistering = false;
+							} else {
+								$state.transitionTo('index');
+							}
 						});
 				}
 			};
