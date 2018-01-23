@@ -1,0 +1,27 @@
+<br>
+<br>
+<div class="sign-up-container ui raised very padded text container segment">
+  <h2 class="ui header">Sign up with your wallet address</h2>
+  <form class="ui form" ng-submit="register()">
+    <div class="field">
+      <label>First Name</label>
+      <input type="text" name="first-name" placeholder="First Name" ng-model="user.name">
+    </div>
+    <div class="field">
+      <label>Last Name</label>
+      <input type="text" name="last-name" placeholder="Last Name" ng-model="user.lastname">
+    </div>
+    <div class="field">
+      <label>User Address</label>
+      <input type="text" name="user-address" placeholder="San francisco 11" ng-model="user.userAddress">
+    </div>
+
+    <div class="field">
+      <label>MetaMask address: </label>
+      <b ng-bind="user.address"></b>
+      <input type="hidden" name="address" ng-model="user.address">
+    </div>
+
+    <button class="ui button" type="submit">Sign up</button>
+  </form>
+</div>
