@@ -87,9 +87,9 @@
   <div class="content">
     <b ng-bind="selectedService.Price + ' eth'"></b>
 
-    <div  ng-bind="selectedService.Description"></div>
+    <div ng-bind="selectedService.Description"></div>
     <br />
-    <button class="ui ok green button">Buy</button>
+    <button ng-if="showEdit(service.UserCreated)"   class="ui ok green button">Buy</button>
   </div>
 </div>
 

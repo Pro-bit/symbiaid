@@ -25,7 +25,7 @@ angular
 
 					this.contractJson = response;
 
-					this.SYBContract = this.web3.eth.contract(this.contractJson.abi).at("0xD832aae20C179697eB98b9D79075ccEcAe24AF69");
+					this.SYBContract = this.web3.eth.contract(this.contractJson.abi).at("0x16E65bCaF146c326cD0CcEc18eeF17a04E0A8aED");
 
 					def.resolve(this.SYBContract);
 				});
