@@ -36,6 +36,7 @@ angular
 
 
 		this.buy = function(service){
+			/*
 					//delete&create new
 					SYBService
 				      .deleteById({ id: service.id })
@@ -48,38 +49,34 @@ angular
 		                        .$promise
 		                        .then(function () {
 		                        	debugger;
-		                        	/*
-		                            SYBService.find().$promise.then(function (SYBService) {
-		                                $scope.SYBServices = SYBService;
-		                            });
-		                            */
+
 		                        });
 				      });
-
+			*/
 			var def = $q.defer();
 
 			// register with address to blockchain
 			var res = this.getSYBContract().then(function(instance){
 
-				/*
-				instance.onCreateUser({
-					userAddress: ContractService.web3.eth.coinbase
+				
+				instance.onCreateServiceOrder({
+					serviceOrderId: service.id
 				}, {
 					fromBlock: 0,
 					toBlock: 'latest'
 				}).watch(function (error, event) {
 
-
+					debugger;
 				});
-				*/
+				
 
-				/*
+				
 				instance.createServiceOrder(service.id, service.ServiceType, service.UserCreated, service.Name, service.Description, service.Price, function(err,res){
 
 					debugger;
 
 				})
-				*/
+				
 
 			});
 
