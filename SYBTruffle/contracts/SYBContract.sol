@@ -28,6 +28,7 @@ contract SYBContract {
 
     // Events
     event onCreateUser(address indexed userAddress);
+    event onCreateServiceOrder(uint indexed serviceOrderId);
 
     function createUser(string _firstName, string _lastName, string _userAddress) public returns (bool) {
         users[msg.sender].firstName = _firstName;
@@ -41,18 +42,6 @@ contract SYBContract {
     }
 
     function createServiceOrder(uint _id, uint _category, address _userCreated, string _name, string _description, uint _price) public {
-        // users[msg.sender].services.push(ServiceOrder(
-        //     _id,
-        //     _category,
-        //     msg.sender,
-        //     _receiver,
-        //     false,
-        //     _price,
-        //     0,
-        //     _name,
-        //     _description
-        // ));
-
         // user cant accept his service order
         require(msg.sender != _userCreated);
 
@@ -73,6 +62,9 @@ contract SYBContract {
         users[_userCreated].servicesCounter = users[_userCreated].servicesCounter + 1;
         // update all services counter
         allServicesCounter++;
+
+        // trigger event
+        onCreateServiceOrder(_id);
     }
 
     function getServicesCounter() public constant returns (uint) {
@@ -211,12 +203,6 @@ contract SYBContract {
 
 		// we retrieve the service order
         ServiceOrder storage service = services[_id];
-        // for (uint i = 0; i < users[_recipient].servicesCounter; i++) {
-        //     if (services[i].serviceOrderId == _id) {
-		//         service = services[i];
-        //         break;
-        //     }
-        // }
 
 		// we check whether the service order has not already been sold
 		require(service.userAccepted == 0x0);
