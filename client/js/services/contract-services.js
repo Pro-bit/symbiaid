@@ -25,7 +25,7 @@ angular
 
 					this.contractJson = response;
 
-					this.SYBContract = this.web3.eth.contract(this.contractJson.abi).at("0x9BcC857eFD62CC6b5cd89151e063C157B7C82f41");
+					this.SYBContract = this.web3.eth.contract(this.contractJson.abi).at("0xF9F040002dBFcF2ab837194E71279fED2C5f800E");
 
 					def.resolve(this.SYBContract);
 				});
@@ -117,8 +117,10 @@ angular
 			var def = $q.defer();
 		    var res = this.getSYBContract().then(function(instance){
 	            instance.payServiceOrder(id, recip, score, {from: this.web3.eth.coinbase, value: this.web3.toWei(price, "ether"), gas: 500000 }, function(err, res){
-	            })
+				
+				})
 			})
+			return def.promise;
 		}
 
 		this.getAvgScore = function(service){
