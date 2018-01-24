@@ -1,39 +1,118 @@
 <div class="ui fixed inverted menu">
-        <div class="ui container">
-          <a href="#" class="header item">
-            <img class="logo" src="assets/images/logo.png">
-            {{test}}
-          </a>
-          <a href="#" class="item">Home</a>
-          <div class="ui simple dropdown item">
-            Dropdown <i class="dropdown icon"></i>
-            <div class="menu">
-              <a class="item" href="#">Link Item</a>
-              <a class="item" href="#">Link Item</a>
-              <div class="divider"></div>
-              <div class="header">Header Item</div>
-              <div class="item">
-                <i class="dropdown icon"></i>
-                Sub Menu
-                <div class="menu">
-                  <a class="item" href="#">Link Item</a>
-                  <a class="item" href="#">Link Item</a>
-                </div>
-              </div>
-              <a class="item" href="#">Link Item</a>
-            </div>
+  <div class="ui container">
+    <a href="#" class="header item">
+      <img class="logo" src="assets/images/logo.png">
+    </a>
+    <a href="#" class="item">Home</a>
+    <div class="ui simple dropdown item">
+      Dropdown <i class="dropdown icon"></i>
+      <div class="menu">
+        <a class="item" href="#">Link Item</a>
+        <a class="item" href="#">Link Item</a>
+        <div class="divider"></div>
+        <div class="header">Header Item</div>
+        <div class="item">
+          <i class="dropdown icon"></i>
+          Sub Menu
+          <div class="menu">
+            <a class="item" href="#">Link Item</a>
+            <a class="item" href="#">Link Item</a>
+          </div>
+        </div>
+        <a class="item" href="#">Link Item</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="ui fixed labeled icon menu" style="margin-top: 40px; display: flex; justify-content: center;">
+  <a class="item"  style="border-left:1px solid #E8E9E9"  ng-click="categoryFilter = 0">
+    <i class="home icon redAid"></i>
+    House work
+  </a>
+  <a class="item" ng-click="categoryFilter = 1">
+    <i class="tree icon redAid"></i>
+    Landscaping
+  </a>
+  <a class="item" ng-click="categoryFilter = 2">
+    <i class="comment outline icon redAid"></i>
+    Socializing
+  </a>
+  <a class="item" ng-click="categoryFilter = 3">
+    <i class="food icon redAid"></i>
+    Food
+  </a>
+
+  <a class="item" ng-click="categoryFilter = 4">
+    <i class="car icon redAid"></i>
+    Transport
+  </a>
+</div>
+
+
+
+<div class="ui grid">
+  <div class="three wide column">
+    <div class="ui vertical inverted sticky menu fixed top" style="margin-top: 113px; background: #107896">
+      <div style="width: 400px; margin:0 auto">
+        <div class="item">
+          <div class="ui checkbox">
+            <input type="checkbox" name="filter1">
+            <label style="color: white; font-weight: bold;">Pomoč</label>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="ui checkbox">
+            <input type="checkbox" name="filter2">
+            <label style="color: white; font-weight: bold;">Druženje</label>
+          </div>
+        </div>  
+
+        <div class="item">
+          <div class="ui checkbox">
+            <input type="checkbox" name="filter3">
+            <label style="color: white; font-weight: bold;">Filter 3</label>
+          </div>
+        </div>  
+
+        <div class="item">
+          <div class="ui checkbox">
+            <input type="checkbox" name="filter4">
+            <label style="color: white; font-weight: bold;">Filter 4</label>
           </div>
         </div>
       </div>
-    
-      <div class="ui main text container">
-        <h1 class="ui header">Services</h1>
-        <ul>
-          <li ng-repeat="service in SYBServices track by $index">
-            <div ng-bind="service.Name"></div>
-            <div ng-bind="service.Description"></div>
-            <div><span ng-bind="service.Price"></span>eth</div>
-          </li>
-        </ul>
+    </div>
+  </div>
 
+  <div class="thirteen wide column">
+    <div class="ui cards" style="width: 100%; margin-top: 90px;">
+      <div class="card" ng-repeat="service in SYBServices  | filter: {Category:categoryFilter } track by $index ">
+        <div class="content">
+          <div class="right floated mini ui"><i class="{{getCategoryIcon(service.Category)}} food icon redAid"></i></div>
+          <div class="header blueAid" ng-bind="service.Name"></div>
+          <div class="meta" ng-bind="service.Price + ' eth'"></div>
+          <div class="description" ng-bind="service.Description"></div>
+        </div>
+        <div class="extra content">
+          <div class="ui two buttons">
+            <div class="ui basic green button">Buy</div>
+            <div class="ui basic blue button" ng-click="readMore(service)">Read more</div>
+          </div>
+        </div>
       </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="ui tiny modal">
+  <div class="header blueAid">{{selectedService.Name}}</div>
+  <div class="content">
+    <div  ng-bind="selectedService.Description"></div>
+  </div>
+</div>
+
