@@ -22,9 +22,10 @@ angular
 			}
 			else {
 				$http.get('SYBContract.json').success(function (response) {
+
 					this.contractJson = response;
 
-					this.SYBContract = this.web3.eth.contract(this.contractJson.abi).at("0xDcE03A21f544353C032D4686B1Ba06E063292Eb5");
+					this.SYBContract = this.web3.eth.contract(this.contractJson.abi).at("0x6c040A3F05f4BBC22ABd4c0988b474B879B3329A");
 
 					def.resolve(this.SYBContract);
 				});

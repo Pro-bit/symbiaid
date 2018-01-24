@@ -17,11 +17,14 @@ contract SYBContract {
         string firstName;
         string lastName;
         string userAddress;
-        ServiceOrder[] services;
+        //ServiceOrder[] services;
         uint servicesCounter;
     }
 
     mapping (address => User) public users;
+    mapping (uint => ServiceOrder) public services;
+
+    uint allServicesCounter = 0;
 
     // Events
     event onCreateUser(address indexed userAddress);
@@ -37,73 +40,169 @@ contract SYBContract {
         return true;
     }
 
-    function createServiceOrder(uint _id, uint _category, string _name, string _description, uint _price) public {
-        users[msg.sender].services.push(ServiceOrder(
-            _id,
-            _category,
-            msg.sender,
-            0x0,
-            false,
-            _price,
-            0,
-            _name,
-            _description
-        ));
+    function createServiceOrder(uint _id, uint _category, address _userCreated, string _name, string _description, uint _price) public {
+        // users[msg.sender].services.push(ServiceOrder(
+        //     _id,
+        //     _category,
+        //     msg.sender,
+        //     _receiver,
+        //     false,
+        //     _price,
+        //     0,
+        //     _name,
+        //     _description
+        // ));
 
-        users[msg.sender].servicesCounter++;
+        // user cant accept his service order
+        require(msg.sender != _userCreated);
+
+        // add new service 
+        services[allServicesCounter] = ServiceOrder(
+            _id,            // service order id
+            _category,      // id category
+            _userCreated,   // userCreated
+            msg.sender,     // userAccepted
+            false,          // isDone
+            _price,         // price
+            0,              // score
+            _name,          // service order name
+            _description    // service order description
+        );
+
+        // update user services counter
+        users[_userCreated].servicesCounter = users[_userCreated].servicesCounter + 1;
+        // update all services counter
+        allServicesCounter++;
     }
 
-    function getUserPendingServiceOrders() public constant returns (uint[]) {
-        // prepare intermediary array
-		uint[] memory serviceOrderIds = new uint[](users[msg.sender].servicesCounter);
-        uint numberOfPendingOrders = 0;
+    function getServicesCounter() public constant returns (uint) {
+        return users[msg.sender].servicesCounter;
+    }
+
+    function getUserServices() public constant returns (uint[]) {
+        uint[] memory serviceOrderIds = new uint[](allServicesCounter);
+        uint numberOfOrders = 0;
 
 		// iterate over orders
-		for (uint i = 0; i < users[msg.sender].servicesCounter; i++) {
-            if (!users[msg.sender].services[i].isDone) {
-                serviceOrderIds[i] = users[msg.sender].services[i].serviceOrderId;
-                numberOfPendingOrders++;
+		for (uint i = 0; i < allServicesCounter; i++) {
+            if (services[i].userCreated == msg.sender) {
+                serviceOrderIds[i] = services[i].serviceOrderId;
+                numberOfOrders++;
             }
 		}
 
-        // return all service order ids
-        return (serviceOrderIds);
-    }
-
-    function getService(uint _id) public constant returns(uint, uint, address, address, bool, uint, uint, string, string) {
-        ServiceOrder storage tmpOrder;
-        for (uint i = 0; i < users[msg.sender].servicesCounter; i++) {
-            if (users[msg.sender].services[i].serviceOrderId == _id) {
-                tmpOrder = users[msg.sender].services[i];
-                break;
-            }
+        // copy the serviceOrderIds array into smaller array
+        uint[] memory serviceOrders = new uint[](numberOfOrders);
+        for (uint j = 0; j < numberOfOrders; j++) {
+            serviceOrders[j] = serviceOrderIds[j];
         }
 
-        return (
-            tmpOrder.serviceOrderId,
-            tmpOrder.serviceOrderCategory,
-            tmpOrder.userCreated,
-            tmpOrder.userAccepted,
-            tmpOrder.isDone,
-            tmpOrder.price,
-            tmpOrder.score,
-            tmpOrder.name,
-            tmpOrder.description
-        );
+        // return all service order ids
+        return (serviceOrders);
     }
 
-    function getAvgScore(address _user, uint _categoryId) public constant returns(uint) {
-        require(users[_user].servicesCounter > 0);
+    function getUserPendingServiceOrders() public constant returns (uint[]) {
+        uint[] memory serviceOrderIds = new uint[](allServicesCounter);
+        uint numberOfOrders = 0;
+
+		// iterate over orders
+		for (uint i = 0; i < allServicesCounter; i++) {
+            if (services[i].userCreated == msg.sender && !services[i].isDone) {
+                serviceOrderIds[i] = services[i].serviceOrderId;
+                numberOfOrders++;
+            }
+		}
+
+        // copy the serviceOrderIds array into smaller array
+        uint[] memory serviceOrders = new uint[](numberOfOrders);
+        for (uint j = 0; j < numberOfOrders; j++) {
+            serviceOrders[j] = serviceOrderIds[j];
+        }
+
+        // return all service order ids
+        return (serviceOrders);
+    }
+
+    function getUserDoneServiceOrders() public constant returns (uint[]) {
+        uint[] memory serviceOrderIds = new uint[](allServicesCounter);
+        uint numberOfOrders = 0;
+
+		// iterate over orders
+		for (uint i = 0; i < allServicesCounter; i++) {
+            if (services[i].userCreated == msg.sender && services[i].isDone) {
+                serviceOrderIds[i] = services[i].serviceOrderId;
+                numberOfOrders++;
+            }
+		}
+
+        // copy the serviceOrderIds array into smaller array
+        uint[] memory serviceOrders = new uint[](numberOfOrders);
+        for (uint j = 0; j < numberOfOrders; j++) {
+            serviceOrders[j] = serviceOrderIds[j];
+        }
+
+        // return all service order ids
+        return (serviceOrders);
+    }
+
+    function getUserAcceptedServiceOrders() public constant returns (uint[]) {
+        uint[] memory serviceOrderIds = new uint[](allServicesCounter);
+        uint numberOfOrders = 0;
+
+		// iterate over orders
+		for (uint i = 0; i < allServicesCounter; i++) {
+            if (services[i].userAccepted == msg.sender) {
+                serviceOrderIds[i] = services[i].serviceOrderId;
+                numberOfOrders++;
+            }
+		}
+
+        // copy the serviceOrderIds array into smaller array
+        uint[] memory serviceOrders = new uint[](numberOfOrders);
+        for (uint j = 0; j < numberOfOrders; j++) {
+            serviceOrders[j] = serviceOrderIds[j];
+        }
+
+        // return all service order ids
+        return (serviceOrders);
+    }
+
+    // function getService(uint _id) public constant returns(uint, uint, address, address, bool, uint, uint, string, string) {
+    //     //ServiceOrder storage tmpOrder;
+    //     // for (uint i = 0; i < users[msg.sender].servicesCounter; i++) {
+    //     //     if (users[msg.sender].services[i].serviceOrderId == _id) {
+    //     //         tmpOrder = users[msg.sender].services[i];
+    //     //         break;
+    //     //     }
+    //     // }
+
+    //     ServiceOrder memory tmpOrder = services[_id];
+
+    //     return (
+    //         tmpOrder.serviceOrderId,
+    //         tmpOrder.serviceOrderCategory,
+    //         tmpOrder.userCreated,
+    //         tmpOrder.userAccepted,
+    //         tmpOrder.isDone,
+    //         tmpOrder.price,
+    //         tmpOrder.score,
+    //         tmpOrder.name,
+    //         tmpOrder.description
+    //     );
+    // }
+
+    function getAvgScore(address _user, uint _categoryId) public constant returns(uint, uint) {
+        //require(users[_user].servicesCounter > 0);
         uint scoreSum = 0;
         uint scoreCounter = 0;
-        for (uint i = 0; i < users[_user].servicesCounter; i++) {
-            if (users[_user].services[i].serviceOrderCategory == _categoryId && users[_user].services[i].score != 0) {
-                scoreSum += users[_user].services[i].score;
+        for (uint i = 0; i < allServicesCounter; i++) {
+            if (_user == services[i].userCreated && services[i].serviceOrderCategory == _categoryId && services[i].score != 0) {
+                scoreSum += services[i].score;
                 scoreCounter++;
             }
         }
 
-        return scoreSum / scoreCounter;
+        return (scoreCounter != 0 ? (scoreSum / scoreCounter) : 0, scoreCounter);
     }
 
     function payServiceOrder(uint _id, address _recipient, uint _score) payable public {
@@ -111,13 +210,13 @@ contract SYBContract {
 		require(users[_recipient].servicesCounter > 0);
 
 		// we retrieve the service order
-        ServiceOrder storage service;
-        for (uint i = 0; i < users[_recipient].servicesCounter; i++) {
-            if (users[_recipient].services[i].serviceOrderId == _id) {
-		        service = users[_recipient].services[i];
-                break;
-            }
-        }
+        ServiceOrder storage service = services[_id];
+        // for (uint i = 0; i < users[_recipient].servicesCounter; i++) {
+        //     if (services[i].serviceOrderId == _id) {
+		//         service = services[i];
+        //         break;
+        //     }
+        // }
 
 		// we check whether the service order has not already been sold
 		require(service.userAccepted == 0x0);
