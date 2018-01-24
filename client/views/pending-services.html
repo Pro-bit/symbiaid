@@ -17,32 +17,33 @@
 
 
 
-<div class="ui grid">
+<div class="ui grid" style="margin-top: 20px;">
   <div class="two wide column"></div>
 
-  <div class="fourteen wide column">
-    <div>
-        <table>
+  <div class="twelve wide column">
+        <table class="ui celled padded table">
             <thead>
-                    <td>Category</td>
-                    <td>From</td>
-                    <td>To</td>
-                    <td>Title</td>              
+                <tr>
+                    <th>Category</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Title</th>      
+                </tr>        
             </thead>
             <tbody>
                 <tr ng-repeat="service in pendingServices">
-                    <td>{{service[1]}}</td>
-                    <td>{{service[2]}}</td>
-                    <td>{{service[3]}}</td>
-                    <td>{{service[7]}}</td>
+                    <td ng-bind='categoryName([service[1]])'></td>
+                    <td ng-bind='service[2]'></td>
+                    <td ng-bind='service[3]'></td>
+                    <td ng-bind='service[7]'></td>
                 </tr>
             </tbody>
 
         </table>
-        {{service}}
-    </div>
 
   </div>
+
+  <div class="two wide column"></div>
 </div>
-<div class="two wide column"></div>
+
 

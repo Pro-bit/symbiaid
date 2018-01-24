@@ -96,8 +96,6 @@ angular
 		            		}
 		            	})
 		            }
-	                //debugger;
-
 	            })
            })
 		    return def.promise;
