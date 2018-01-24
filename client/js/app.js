@@ -64,6 +64,12 @@ angular
         controller: 'AidServicesController',
         authenticate: true
       })
+      .state('pending-services', {
+        url: '/pending-services',
+        templateUrl: 'views/pending-services.html',
+        controller: 'PendingServicesController',
+        authenticate: true
+      })
     $urlRouterProvider.otherwise('/');
   }])
   .run(['$rootScope', '$state', 'LoopBackAuth', 'AuthService', function($rootScope, $state, LoopBackAuth, AuthService) {

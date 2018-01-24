@@ -27,6 +27,16 @@ angular
             });
         */
 
+        /*
+          web3.eth.getBalance(address, function (error, result) {
+            if (!error) {
+              console.log(result.toNumber());
+            } else {
+              console.error(error);
+            }
+          })
+        */
+
 
         $scope.showEdit = function(userId){
             return $scope.userId == userId?true:false;
@@ -141,91 +151,14 @@ angular
             return icon
         }
     }])
-    .controller('AddServiceController', ['$scope', 'SYBService', '$state', 'ContractService', function ($scope, SYBService, $state, ContractService) {
-        $scope.action = 'Add';
-        $scope.service = {
-            UserCreated: ContractService.web3.eth.coinbase,
-            ServiceType: 0
-        };
+    .controller('PendingServicesController', ['$scope', 'SYBService', '$state', 'ContractService', function ($scope, SYBService, $state, ContractService) {
+       
 
-        $scope.serviceTypes = [
-            {
-                Id: 0,
-                Name: "House work"
-            },
-            {
-                Id: 1,
-                Name: "Socializing"
-            },
-            {
-                Id: 2,
-                Name: "afdfas"
-            },
-            {
-                Id: 3,
-                Name: "Food transport"
-            },
-            {
-                Id: 4,
-                Name: "House work"
-            },
-        ];
+       var res = ContractService.getUserPendingServiceOrders().then(function(err, res){
+        debugger;
 
-        $scope.submitForm = function () {
-            SYBService
-                .create($scope.service)
-                .$promise
-                .then(function () {
-                    $state.go('index');
-                });
-        };
 
-        $scope.discard = function () {
-            $state.go("index");
-        };
+       })
+
     }])
-    .controller('EditServiceController', ['$scope', '$q', '$stateParams', '$state', 'SYBService', function ($scope, $q, $stateParams, $state, SYBService) {
-            $scope.action = 'Edit';
-            $scope.service = {};
-
-            $scope.serviceTypes = [
-                {
-                    Id: 0,
-                    Name: "House work"
-                },
-                {
-                    Id: 1,
-                    Name: "Socializing"
-                },
-                {
-                    Id: 2,
-                    Name: "afdfas"
-                },
-                {
-                    Id: 3,
-                    Name: "Food transport"
-                },
-                {
-                    Id: 4,
-                    Name: "House work"
-                },
-            ];
-
-            SYBService.findById({ id: $stateParams.id })
-                .$promise
-                .then(function(data) {
-                    $scope.service = data;
-                });
-
-            $scope.submitForm = function () {
-                $scope.service
-                    .$save()
-                    .then(function () {
-                        $state.go('index');
-                    });
-            };
-    
-            $scope.discard = function () {
-                $state.go("index");
-            };
-        }]);
+  

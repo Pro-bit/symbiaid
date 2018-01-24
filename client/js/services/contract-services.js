@@ -82,4 +82,16 @@ angular
 
 			return def.promise;
 		}
+
+		this.getUserPendingServiceOrders =function(){
+			var def = $q.defer();
+		    var res = this.getSYBContract().then(function(instance){
+	            instance.getUserPendingServiceOrders(function(err, res){
+
+	                debugger;
+
+	            })
+           })
+		    return def.promise;
+		}
 	}]);
