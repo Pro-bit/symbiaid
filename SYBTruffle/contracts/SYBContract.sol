@@ -159,29 +159,27 @@ contract SYBContract {
         return (serviceOrders);
     }
 
-    // function getService(uint _id) public constant returns(uint, uint, address, address, bool, uint, uint, string, string) {
-    //     //ServiceOrder storage tmpOrder;
-    //     // for (uint i = 0; i < users[msg.sender].servicesCounter; i++) {
-    //     //     if (users[msg.sender].services[i].serviceOrderId == _id) {
-    //     //         tmpOrder = users[msg.sender].services[i];
-    //     //         break;
-    //     //     }
-    //     // }
+    function getService(uint _id) public constant returns(uint, uint, address, address, bool, uint, uint, string, string) {
+        ServiceOrder storage tmpOrder;
+        for (uint i = 0; i < allServicesCounter; i++) {
+            if (services[i].serviceOrderId == _id) {
+                tmpOrder = services[i];
+                break;
+            }
+        }
 
-    //     ServiceOrder memory tmpOrder = services[_id];
-
-    //     return (
-    //         tmpOrder.serviceOrderId,
-    //         tmpOrder.serviceOrderCategory,
-    //         tmpOrder.userCreated,
-    //         tmpOrder.userAccepted,
-    //         tmpOrder.isDone,
-    //         tmpOrder.price,
-    //         tmpOrder.score,
-    //         tmpOrder.name,
-    //         tmpOrder.description
-    //     );
-    // }
+        return (
+            tmpOrder.serviceOrderId,
+            tmpOrder.serviceOrderCategory,
+            tmpOrder.userCreated,
+            tmpOrder.userAccepted,
+            tmpOrder.isDone,
+            tmpOrder.price,
+            tmpOrder.score,
+            tmpOrder.name,
+            tmpOrder.description
+        );
+    }
 
     function getAvgScore(address _user, uint _categoryId) public constant returns(uint, uint) {
         //require(users[_user].servicesCounter > 0);
