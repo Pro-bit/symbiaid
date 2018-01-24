@@ -38,6 +38,35 @@ angular
                     console.log("added", res);
                 });
         }
+
+        // get icon for category
+        $scope.getCategoryIcon = function(category){
+            var icon = ""
+            switch(category){
+                case 0:
+                    icon = "home"
+                    break
+                case 1:
+                    icon = "tree"
+                    break
+                case 2:
+                    icon = "comment outline"
+                    break
+                case 3:
+                    icon = "food"
+                    break
+                case 4:
+                    icon = "car"
+                    break
+                case 5:
+                    icon = "grid layout"
+                    break
+            }
+
+            return icon
+        }
+
+
     }])
     .controller('AddServiceController', ['$scope', 'SYBService', '$state', 'ContractService', function ($scope, SYBService, $state, ContractService) {
         $scope.action = 'Add';

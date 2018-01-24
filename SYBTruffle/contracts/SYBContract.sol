@@ -3,11 +3,14 @@ pragma solidity ^0.4.15;
 contract SYBContract {
     struct ServiceOrder {
         uint serviceOrderId;
+        uint serviceOrderCategory;
         address userCreated;
         address userAccepted;
         bool isDone;
         uint price;
         uint score;
+        string name;
+        string description;
     }
 
     struct User {
@@ -34,33 +37,40 @@ contract SYBContract {
         return true;
     }
 
-    function createServiceOrder(uint _id, uint _price) public {
+    function createServiceOrder(uint _id, uint _category, string _name, string _description, uint _price) public {
         users[msg.sender].services.push(ServiceOrder(
             _id,
+            _category,
             msg.sender,
             0x0,
             false,
             _price,
-            0
+            0,
+            _name,
+            _description
         ));
 
         users[msg.sender].servicesCounter++;
     }
 
-    function getUserServiceOrders() public constant returns (uint[]) {
+    function getUserPendingServiceOrders() public constant returns (uint[]) {
         // prepare intermediary array
 		uint[] memory serviceOrderIds = new uint[](users[msg.sender].servicesCounter);
+        uint numberOfPendingOrders = 0;
 
 		// iterate over orders
 		for (uint i = 0; i < users[msg.sender].servicesCounter; i++) {
-            serviceOrderIds[i] = users[msg.sender].services[i].serviceOrderId;
+            if (!users[msg.sender].services[i].isDone) {
+                serviceOrderIds[i] = users[msg.sender].services[i].serviceOrderId;
+                numberOfPendingOrders++;
+            }
 		}
 
         // return all service order ids
         return (serviceOrderIds);
     }
 
-    function getService(uint _id) public constant returns(uint, address, address, bool, uint, uint) {
+    function getService(uint _id) public constant returns(uint, uint, address, address, bool, uint, uint, string, string) {
         ServiceOrder storage tmpOrder;
         for (uint i = 0; i < users[msg.sender].servicesCounter; i++) {
             if (users[msg.sender].services[i].serviceOrderId == _id) {
@@ -71,12 +81,29 @@ contract SYBContract {
 
         return (
             tmpOrder.serviceOrderId,
+            tmpOrder.serviceOrderCategory,
             tmpOrder.userCreated,
             tmpOrder.userAccepted,
             tmpOrder.isDone,
             tmpOrder.price,
-            tmpOrder.score
+            tmpOrder.score,
+            tmpOrder.name,
+            tmpOrder.description
         );
+    }
+
+    function getAvgScore(address _user, uint _categoryId) public constant returns(uint) {
+        require(users[_user].servicesCounter > 0);
+        uint scoreSum = 0;
+        uint scoreCounter = 0;
+        for (uint i = 0; i < users[_user].servicesCounter; i++) {
+            if (users[_user].services[i].serviceOrderCategory == _categoryId && users[_user].services[i].score != 0) {
+                scoreSum += users[_user].services[i].score;
+                scoreCounter++;
+            }
+        }
+
+        return scoreSum / scoreCounter;
     }
 
     function payServiceOrder(uint _id, address _recipient, uint _score) payable public {
