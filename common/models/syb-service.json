@@ -2,11 +2,11 @@
   "name": "SYBService",
   "plural": "services",
   "base": "PersistedModel",
-  "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
+    "id": {"type": "Number", "generated": true, "id": true},
     "Name": {
       "type": "string",
       "required": true

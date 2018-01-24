@@ -1,0 +1,20 @@
+{
+  "ids": {
+    "User": 1,
+    "AccessToken": 1,
+    "ACL": 1,
+    "RoleMapping": 1,
+    "Role": 1,
+    "SYBService": 2
+  },
+  "models": {
+    "User": {},
+    "AccessToken": {},
+    "ACL": {},
+    "RoleMapping": {},
+    "Role": {},
+    "SYBService": {
+      "1": "{\"Name\":\"Mawn lawning\",\"Description\":\"Mawn lawning up to 2h\",\"Price\":3,\"UserCreated\":\"0xf3db56e1abb5add1784a4e6f775ec76c786f2997\",\"ServiceType\":3,\"id\":1}"
+    }
+  }
+}
