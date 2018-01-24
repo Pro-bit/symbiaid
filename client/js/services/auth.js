@@ -20,7 +20,9 @@ angular
 
 				// create new user on contract instance
 				instance.createUser(user.name, user.lastname, user.userAddress, function (err, res) {
-					def.resolve(err, res);
+					if (err) {
+						def.resolve(err, res);
+					}
 					// user created the watcher should be called
 				});
 			});
