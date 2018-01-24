@@ -10,36 +10,29 @@ angular
                 $scope.SYBServices = SYBService;
             });
 
-        // add some services to db if there is none
-        if ($scope.SYBServices.length < 1) {
-            // add some fake services
-            SYBService
-                .create({
-                    Name: "Servis " + $scope.SYBServices.length,
-                    Description: "krneki " + $scope.SYBServices.length,
-                    Price: + $scope.SYBServices.length,
-                    UserCreated: ContractService.web3.eth.coinbase
-                })
-                .$promise
-                .then(function (res) {
-                    console.log("added", res);
-                });
+        // add some fake services
+        SYBService
+            .create({
+                Name: "Servis " + $scope.SYBServices.length,
+                Description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." + $scope.SYBServices.length,
+                Price:  + $scope.SYBServices.length,
+                UserCreated: ContractService.web3.eth.coinbase,
+                Category: Math.floor(Math.random() * 5)
+            })
+            .$promise
+            .then(function(res) {
+                console.log("added", res);
+            });
 
-            // add some fake services
-            SYBService
-                .create({
-                    Name: "Servis " + $scope.SYBServices.length,
-                    Description: "krneki " + $scope.SYBServices.length,
-                    Price: + $scope.SYBServices.length,
-                    UserCreated: ContractService.web3.eth.coinbase
-                })
-                .$promise
-                .then(function (res) {
-                    console.log("added", res);
-                });
+
+        //$scope.categoryFilter = 0;
+
+        $scope.readMore = function(service){
+            $scope.selectedService = service;
+            $('.tiny.modal').modal('show');
         }
 
-        // get icon for category
+
         $scope.getCategoryIcon = function(category){
             var icon = ""
             switch(category){
@@ -65,8 +58,6 @@ angular
 
             return icon
         }
-
-
     }])
     .controller('AddServiceController', ['$scope', 'SYBService', '$state', 'ContractService', function ($scope, SYBService, $state, ContractService) {
         $scope.action = 'Add';
