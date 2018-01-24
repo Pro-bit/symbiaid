@@ -25,7 +25,7 @@ angular
 
 					this.contractJson = response;
 
-					this.SYBContract = this.web3.eth.contract(this.contractJson.abi).at("0xD832aae20C179697eB98b9D79075ccEcAe24AF69");
+					this.SYBContract = this.web3.eth.contract(this.contractJson.abi).at("0x16E65bCaF146c326cD0CcEc18eeF17a04E0A8aED");
 
 					def.resolve(this.SYBContract);
 				});
@@ -87,8 +87,16 @@ angular
 			var def = $q.defer();
 		    var res = this.getSYBContract().then(function(instance){
 	            instance.getUserPendingServiceOrders(function(err, res){
-
-	                debugger;
+	            	var pendingList = [];
+	            	for(var i = 0; i<res.length; i++){
+		            	instance.getService(res[i].c[0],function(err1, res2){
+		            		pendingList.push(res2);
+		            		if(pendingList.length == res.length){
+		            			def.resolve(pendingList);
+		            		}
+		            	})
+		            }
+	                //debugger;
 
 	            })
            })

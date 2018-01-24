@@ -154,10 +154,8 @@ angular
     .controller('PendingServicesController', ['$scope', 'SYBService', '$state', 'ContractService', function ($scope, SYBService, $state, ContractService) {
        
 
-       var res = ContractService.getUserPendingServiceOrders().then(function(err, res){
-        debugger;
-
-
+       var res = ContractService.getUserPendingServiceOrders().then(function(res){
+            $scope.pendingServices = res;
        })
 
     }])
