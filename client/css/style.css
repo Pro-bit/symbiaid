@@ -6,3 +6,9 @@
 	color:#107896 !important;
 }
 
+.sign-up-body {
+    width: 100% !important;
+    height: 100%;
+    position: absolute;
+    background: url('../assets/bg-pattern.png'), linear-gradient(to left,#7b4397,#dc2430);
+}

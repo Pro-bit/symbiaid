@@ -1,65 +1,57 @@
-// Copyright IBM Corp. 2015. All Rights Reserved.
-// Node module: loopback-getting-started-intermediate
-// This file is licensed under the MIT License.
-// License text available at https://opensource.org/licenses/MIT
-
 angular
-  .module('app')
-  .controller('AuthLoginController', ['$scope', 'AuthService', '$state',
-      function($scope, AuthService, $state) {
-    $scope.user = {
-      email: 'foo@bar.com',
-      password: 'foobar'
-    };
+	.module('app')
+	.controller('SignUpController', ['$scope', 'AuthService', 'ContractService', '$state',
+		function ($scope, AuthService, ContractService, $state) {
+			var registerForm = null;
 
-    $scope.login = function() {
-      AuthService.login($scope.user.email, $scope.user.password)
-        .then(function() {
+			// initial load function
+			this.init = function() {
+				registerForm = $('.ui.form');
+				registerForm.form({
+					fields: {
+						'first-name'  : 'empty',
+						'last-name'   : 'empty',
+						'user-address': 'empty',
+					}
+				});
+			}
 
-          // return to saved returnTo state before redirection to login
-          if ($scope.returnTo && $scope.returnTo.state) {
-            $state.go(
-              $scope.returnTo.state.name,
-              $scope.returnTo.params
-            );
-            // maintain the inherited rootscope variable returnTo
-            // but make the returnTo state of it null,
-            // so it can be used again after a new login.
-            $scope.returnTo.state  = null;
-            $scope.returnTo.params = null;
-            return;
-          }
-          // or go to the default state after login
-          $state.go('add-review');
-        });
-    };
-  }])
-  .controller('AuthLogoutController', ['$scope', 'AuthService', '$state',
-      function($scope, AuthService, $state) {
-    AuthService.logout()
-      .then(function() {
-        $state.go('sign-up');
-      });
-  }])
-  .controller('SignUpController', ['$scope', 'AuthService', 'ContractService', '$state',
-      function($scope, AuthService, ContractService, $state) {
-    $scope.user = {
-      name: '',
-      lastname: '',
-      userAddress: '',
-      address: ''
-    };
+			// initial user setup
+			$scope.user = {
+				name: '',
+				lastname: '',
+				userAddress: '',
+				address: ''
+			};
 
-    // check if metamask is installed and address created
-    if(ContractService.web3 == null)
-      $scope.installMetaMask = true;
+			$scope.errMessage = "";
 
-    $scope.user.address = ContractService.web3.eth.coinbase;
+			// check if metamask is installed and address created
+			if (ContractService.web3 == null)
+				$scope.installMetaMask = true;
 
-    $scope.register = function() {
-      AuthService.register($scope.user)
-        .then(function() {
-          $state.transitionTo('index');
-        });
-    };
-  }]);
+
+			// get current active address selected in wallet
+			$scope.user.address = ContractService.web3.eth.coinbase;
+
+			// register account function
+			$scope.register = function () {
+				if(registerForm.form('is valid')) {
+					$scope.isRegistering = true;
+					AuthService.register($scope.user)
+						.then(function (err, res) {
+							// check if error occurs
+							if (err) {
+								$scope.errMessage = err.message;
+								$scope.isRegistering = false;
+							} else {
+								$state.transitionTo('index');
+							}
+						});
+				}
+			};
+
+			// call init func
+			this.init();
+		}
+	]);

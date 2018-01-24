@@ -15,18 +15,21 @@ contract SYBContract {
         string lastName;
         string userAddress;
         ServiceOrder[] services;
-        //mapping (uint => ServiceOrder) services;
         uint servicesCounter;
     }
 
     mapping (address => User) public users;
-    //uint servicesCounter = 0;
+
+    // Events
+    event onCreateUser(address indexed userAddress);
 
     function createUser(string _firstName, string _lastName, string _userAddress) public returns (bool) {
         users[msg.sender].firstName = _firstName;
         users[msg.sender].lastName = _lastName;
         users[msg.sender].userAddress = _userAddress;
         users[msg.sender].servicesCounter = 0;
+
+        onCreateUser(msg.sender);
 
         return true;
     }
@@ -102,7 +105,7 @@ contract SYBContract {
 		service.userAccepted = msg.sender;
 
 		// the buyer can buy the service order
-		service.userCreated.transfer(msg.value);
+        _recipient.send(msg.value);
 
         // set isDone to true (transaction is done)
         service.isDone = true;

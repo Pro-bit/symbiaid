@@ -92,7 +92,7 @@
     <div class="ui cards" style="width: 100%; margin-top: 90px;">
       <div class="card" ng-repeat="service in SYBServices  | filter: {Category:categoryFilter } track by $index ">
         <div class="content">
-          <div class="right floated mini ui"><i class="{{getCategoryIcon(service.Category)}} food icon redAid"></i></div>
+          <div class="right floated mini ui"><i class="{{getCategoryIcon(service.Category)}}  icon redAid"></i></div>
           <div class="header blueAid" ng-bind="service.Name"></div>
           <div class="meta" ng-bind="service.Price + ' eth'"></div>
           <div class="description" ng-bind="service.Description"></div>
