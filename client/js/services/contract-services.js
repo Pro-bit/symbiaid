@@ -140,4 +140,16 @@ angular
            })
 		    return def.promise;
 		}
+
+
+		this.getAvgScore = function(service){
+			var def = $q.defer();
+		    var res = this.getSYBContract().then(function(instance){
+	    		instance.getAvgScore(service.UserCreated, service.ServiceType, function(err, res){
+	    			def.resolve(res);
+	            })
+
+           })
+		    return def.promise;
+		}
 	}]);
