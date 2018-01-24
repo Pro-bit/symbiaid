@@ -1,9 +1,16 @@
-<div class="ui fixed inverted menu">
+<div class="ui fixed inverted menu blueBg">
   <div class="ui container">
+    <!--
     <a href="#" class="header item">
       <img class="logo" src="assets/images/logo.png">
-    </a>
-    <a href="#" class="item">Home</a>
+    </a>-->
+
+    <a href="#" class="item">Explore</a>
+    <a href="#" class="item">Pending</a>
+    <a href="#" class="item">Done</a>
+    <a href="#" class="item">History</a>
+
+    <!--
     <div class="ui simple dropdown item">
       Dropdown <i class="dropdown icon"></i>
       <div class="menu">
@@ -21,7 +28,7 @@
         </div>
         <a class="item" href="#">Link Item</a>
       </div>
-    </div>
+    </div>-->
   </div>
 </div>
 
@@ -49,11 +56,17 @@
     <i class="car icon redAid"></i>
     Transport
   </a>
+
+  <a class="item" ng-click="categoryFilter = ''">
+    <i class="grid layout icon redAid"></i>
+    All
+  </a>
 </div>
 
 
 
 <div class="ui grid">
+  <!--
   <div class="three wide column">
     <div class="ui vertical inverted sticky menu fixed top" style="margin-top: 113px; background: #107896">
       <div style="width: 400px; margin:0 auto">
@@ -87,15 +100,17 @@
       </div>
     </div>
   </div>
+  -->
+  <div class="two wide column"></div>
 
-  <div class="thirteen wide column">
+  <div class="fourteen wide column">
     <div class="ui cards" style="width: 100%; margin-top: 90px;">
       <div class="card" ng-repeat="service in SYBServices  | filter: {Category:categoryFilter } track by $index ">
         <div class="content">
           <div class="right floated mini ui"><i class="{{getCategoryIcon(service.Category)}}  icon redAid"></i></div>
           <div class="header blueAid" ng-bind="service.Name"></div>
           <div class="meta" ng-bind="service.Price + ' eth'"></div>
-          <div class="description" ng-bind="service.Description"></div>
+          <div class="description" ng-bind="service.Description | limitTo: 100"></div>
         </div>
         <div class="extra content">
           <div class="ui two buttons">
@@ -107,12 +122,17 @@
     </div>
   </div>
 </div>
+<div class="two wide column"></div>
 
 
 <div class="ui tiny modal">
-  <div class="header blueAid">{{selectedService.Name}}</div>
+  <div class="header blueAid">{{selectedService.Name}} <i style="float:right" class="{{getCategoryIcon(selectedService.Category)}}  icon redAid"></i> </div>
   <div class="content">
+    <b ng-bind="selectedService.Price + ' eth'"></b>
+
     <div  ng-bind="selectedService.Description"></div>
+    <br />
+    <button class="ui green button">Buy</button>
   </div>
 </div>
 
