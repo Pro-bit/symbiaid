@@ -25,7 +25,7 @@ angular
 
 					this.contractJson = response;
 
-					this.SYBContract = this.web3.eth.contract(this.contractJson.abi).at("0x16E65bCaF146c326cD0CcEc18eeF17a04E0A8aED");
+					this.SYBContract = this.web3.eth.contract(this.contractJson.abi).at("0x9BcC857eFD62CC6b5cd89151e063C157B7C82f41");
 
 					def.resolve(this.SYBContract);
 				});
@@ -66,14 +66,13 @@ angular
 					toBlock: 'latest'
 				}).watch(function (error, event) {
 
-					debugger;
+					//debugger;
 				});
 				
 
-				debugger;
 				instance.createServiceOrder(service.id, service.ServiceType, service.UserCreated, service.Name, service.Description, service.Price, function(err,res){
 
-					debugger;
+					//debugger;
 
 				})
 				
@@ -96,8 +95,6 @@ angular
 		            		}
 		            	})
 		            }
-	                //debugger;
-
 	            })
            })
 		    return def.promise;
@@ -116,8 +113,6 @@ angular
 		            		}
 		            	})
 		            }
-	                //debugger;
-
 	            })
            })
 		    return def.promise;
@@ -136,6 +131,17 @@ angular
 		            		}
 		            	})
 		            }
+	            })
+           })
+		    return def.promise;
+		}
+
+		this.payServiceOrder =function(id, recip, score, price){
+			var def = $q.defer();
+		    var res = this.getSYBContract().then(function(instance){
+				debugger;
+	            instance.payServiceOrder(id, recip, score, {from: this.web3.eth.coinbase, value: this.web3.toWei(price, "ether"), gas: 500000 }, function(err, res){
+	            	debugger;
 	            })
            })
 		    return def.promise;

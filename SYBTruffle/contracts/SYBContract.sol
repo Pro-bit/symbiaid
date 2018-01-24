@@ -200,10 +200,16 @@ contract SYBContract {
 		require(users[_recipient].servicesCounter > 0);
 
 		// we retrieve the service order
-        ServiceOrder storage service = services[_id];
+        ServiceOrder storage service;
+        for (uint i = 0; i < allServicesCounter; i++) {
+            if (services[i].serviceOrderId == _id) {
+                service = services[i];
+                break;
+            }
+        }
 
 		// we check whether the service order has not already been sold
-		require(service.userAccepted == 0x0);
+		require(service.isDone == false);
 
 		// we don't allow the seller to buy his/her own service order
 		require(service.userCreated != msg.sender);
@@ -214,14 +220,14 @@ contract SYBContract {
 		// keep buyer's information
 		service.userAccepted = msg.sender;
 
-		// the buyer can buy the service order
-        _recipient.send(msg.value);
-
         // set isDone to true (transaction is done)
         service.isDone = true;
 
         // save the score
         service.score = _score;
+
+		// the buyer can buy the service order
+        _recipient.send(msg.value);
 
 		// trigger the event
 		//buyArticleEvent(_id, article.seller, article.buyer, article.name, article.price);

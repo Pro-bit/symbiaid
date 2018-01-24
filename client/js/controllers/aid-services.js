@@ -153,9 +153,22 @@ angular
     }])
 
     .controller('DoneServicesController', ['$scope', 'SYBService', '$state', 'ContractService', function ($scope, SYBService, $state, ContractService) {
-        var res = ContractService.getUserDoneServiceOrders().then(function(res){
+        ContractService.getUserDoneServiceOrders().then(function(res){
             $scope.offeredServices = res;
         })
+
+        ContractService.getUserAcceptedServiceOrders().then(function(res){
+            $scope.orderedServices = [];
+            for(var i = 0; i < res.length; i++) {
+                // if isDone is false
+                //debugger;
+                if(res[i][4]) {
+                    $scope.orderedServices.push(res[i]);
+                }
+            }
+            console.log('ordered');
+            console.log(res);
+       })
  
     }])
 
@@ -173,17 +186,28 @@ angular
         return ["House work", "Landscaping", "Socializing", "Food", "Transport"][id];
        }
 
-       ContractService.getUserPendingServiceOrders().then(function(res){
+        ContractService.getUserPendingServiceOrders().then(function(res){
             $scope.offeredServices = res;
-       })
+            console.log('offered');
+            console.log(res);
+        })
 
         ContractService.getUserAcceptedServiceOrders().then(function(res){
-            $scope.orderedServices = res;
+            $scope.orderedServices = [];
+            for(var i = 0; i < res.length; i++) {
+                // if isDone is false
+                //debugger;
+                if(!res[i][4]) {
+                    $scope.orderedServices.push(res[i]);
+                }
+            }
+            console.log('ordered');
+            console.log(res);
        })
 
-                $scope.onPay = function(service) {
+        $scope.onPay = function(service) {
             debugger;
-            ContractService.payServiceOrder(id, recip, score).then(function(res) {
+            ContractService.payServiceOrder(service[0].c[0], service[2], 5, service[5].c[0]).then(function(res) {
                 debugger;
             })
         }
