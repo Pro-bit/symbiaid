@@ -4,7 +4,7 @@ With rapidly aging population, social and economic implications are becoming app
 
 ## Getting Started
 
-Follow the instructions to run project locally. Solidity smart contract used by the project in path **./SYBTruffle/contracts/** are already deployed on ethereum test network(__Ropsten Test Network__). You can get some free test ether from [http://faucet.ropsten.be:3001/](http://faucet.ropsten.be:3001/).
+Follow the instructions to run project locally. Solidity smart contract used by the project in path **./SYBTruffle/contracts/** are already deployed on ethereum test network(__Ropsten Test Network__). You can get some free test ether from [http://faucet.ropsten.be:3001/](http://faucet.ropsten.be:3001/). The demo app is accesible at: [https://symbiaid-app.herokuapp.com/](https://symbiaid-app.herokuapp.com/).
 
 ### Prerequisites
 
