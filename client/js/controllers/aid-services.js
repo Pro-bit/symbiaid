@@ -175,6 +175,9 @@ angular
 
     .controller('PendingServicesController', ['$scope', 'SYBService', '$state', 'ContractService', function ($scope, SYBService, $state, ContractService) {
        
+       $scope.categoryName = function(id){
+        return ["House work", "Landscaping", "Socializing", "Food", "Transport"][id];
+       }
 
        var res = ContractService.getUserPendingServiceOrders().then(function(res){
             $scope.pendingServices = res;
