@@ -1,7 +1,10 @@
 <div class="sign-up-body"></div>
 	<br>
-	<br>
+  <br>
 	<div class="sign-up-container ui raised very padded text container segment" ng-class="{ 'loading': isRegistering }">
+    <div style="display: flex; justify-content: center;">
+      <img src="assets/logo.png" style="width: 160px; height: 100px;"/>
+    </div>
 		<h2 class="ui header">Sign up with your wallet address</h2>
 		<form class="ui form" ng-submit="register()">
 			<div ng-if="errMessage != ''" class="ui red message">{{errMessage}}</div>

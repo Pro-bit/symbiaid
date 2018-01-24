@@ -36,23 +36,6 @@ angular
 
 
 		this.buy = function(service){
-			/*
-					//delete&create new
-					SYBService
-				      .deleteById({ id: service.id })
-				      .$promise
-				      .then(function(res) {
-				      		var newService = service;
-				      		delete newService["id"];
-				            SYBService
-		                        .create(newService)
-		                        .$promise
-		                        .then(function () {
-		                        	debugger;
-
-		                        });
-				      });
-			*/
 			var def = $q.defer();
 
 			// register with address to blockchain
@@ -65,18 +48,12 @@ angular
 					fromBlock: 0,
 					toBlock: 'latest'
 				}).watch(function (error, event) {
-
 					//debugger;
 				});
-				
-
+			
 				instance.createServiceOrder(service.id, service.ServiceType, service.UserCreated, service.Name, service.Description, service.Price, function(err,res){
-
 					//debugger;
-
 				})
-				
-
 			});
 
 			return def.promise;
@@ -139,10 +116,18 @@ angular
 		this.payServiceOrder =function(id, recip, score, price){
 			var def = $q.defer();
 		    var res = this.getSYBContract().then(function(instance){
-				debugger;
 	            instance.payServiceOrder(id, recip, score, {from: this.web3.eth.coinbase, value: this.web3.toWei(price, "ether"), gas: 500000 }, function(err, res){
-	            	debugger;
 	            })
+			})
+		}
+
+		this.getAvgScore = function(service){
+			var def = $q.defer();
+		    var res = this.getSYBContract().then(function(instance){
+	    		instance.getAvgScore(service.UserCreated, service.ServiceType, function(err, res){
+	    			def.resolve(res);
+	            })
+
            })
 		    return def.promise;
 		}

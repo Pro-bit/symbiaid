@@ -86,6 +86,12 @@
   <div class="header blueAid">{{selectedService.Name}} <i style="float:right" class="{{getServiceTypeIcon(selectedService.ServiceType)}}  icon redAid"></i> </div>
   <div class="content">
     <b ng-bind="selectedService.Price + ' eth'"></b>
+    <br />
+    <b><div class="ui star rating" data-rating="3" data-max-rating="5"></div> </b>
+    <br />
+    <b> Number of scores: {{selectedService.numOfScores}} </b>
+
+
 
     <div ng-bind="selectedService.Description"></div>
     <br />
@@ -93,9 +99,11 @@
   </div>
 </div>
 
+
 <div class="ui tiny modal addService">
   <div class="header blueAid"><i class="add icon redAid"></i> Service  </div>
   <div class="content">
     <div ng-include="'../../views/add-service.html'"></div>
   </div>
 </div>
+

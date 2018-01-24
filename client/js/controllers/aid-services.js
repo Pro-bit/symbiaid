@@ -37,7 +37,6 @@ angular
           })
         */
 
-
         $scope.showEdit = function(userId){
             return $scope.userId == userId?true:false;
         }
@@ -115,12 +114,20 @@ angular
 
         $scope.readMore = function(service){
             $scope.selectedService = service;
+            
+            ContractService.getAvgScore(service).then(function(res){
+                $scope.selectedService.avgScore = res[0]["c"][0];
+                $scope.selectedService.numOfScores = res[1]["c"][0];
+            })
+
             $('.tiny.modal.showMore').modal('show');
+            $(".rating").rating('disable');
         }
+
 
         $scope.buyService = function(service){
             ContractService.buy(service).then(function(res){
-                debugger;
+                
             })
         }
 
@@ -206,9 +213,8 @@ angular
        })
 
         $scope.onPay = function(service) {
-            debugger;
             ContractService.payServiceOrder(service[0].c[0], service[2], 5, service[5].c[0]).then(function(res) {
-                debugger;
+                //debugger;
             })
         }
 
