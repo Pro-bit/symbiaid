@@ -35,7 +35,6 @@ angular
 
         $scope.getCategoryIcon = function(category){
             var icon = ""
-            debugger;
             switch(category){
                 case 0:
                     icon = "home"
