@@ -1,7 +1,12 @@
 {
     "db": {
-      "name": "db",
-      "connector": "memory",
-      "file": "mydata.json"
+      "host": "ds115198.mlab.com",
+      "port": 15198,
+      "database": "symbiaiddb",
+      "username": "symbiaid",
+      "password": "${MONGODB_PASS}",
+      "name": "SymbiAid_live",
+      "connector": "mongodb"
     }
   }
+  
