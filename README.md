@@ -11,6 +11,17 @@ Follow the instructions to run project locally. Solidity smart contract used by 
 * [Node.js + npm](https://nodejs.org/en/download/) - Node server and NPM
 * [MetaMask](https://metamask.io/) - MetaMask Chrome extension
 
+Also change to in-memory db provider if you want to test locally - **/server/datasources.json** to:
+
+```
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  }
+}
+```
+
 ### Installing
 
 Install npm packages in base directory
