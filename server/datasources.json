@@ -1,6 +1,11 @@
 {
   "db": {
-    "name": "db",
-    "connector": "memory"
+    "host": "ds115198.mlab.com",
+    "port": 15198,
+    "database": "symbiaiddb",
+    "username": "symbiaid",
+    "password": "symbiaiddb",
+    "name": "SymbiAid_live",
+    "connector": "mongodb"
   }
 }
