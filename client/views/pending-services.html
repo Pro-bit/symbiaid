@@ -21,6 +21,26 @@
   <div class="two wide column"></div>
 
   <div class="fourteen wide column">
+    <div>
+        <table>
+            <thead>
+                    <td>Category</td>
+                    <td>From</td>
+                    <td>To</td>
+                    <td>Title</td>              
+            </thead>
+            <tbody>
+                <tr ng-repeat="service in pendingServices">
+                    <td>{{service[1]}}</td>
+                    <td>{{service[2]}}</td>
+                    <td>{{service[3]}}</td>
+                    <td>{{service[7]}}</td>
+                </tr>
+            </tbody>
+
+        </table>
+        {{service}}
+    </div>
 
   </div>
 </div>
