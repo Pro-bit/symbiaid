@@ -83,6 +83,46 @@ angular
 			return def.promise;
 		}
 
+		this.getUserAcceptedServiceOrders =function(){
+			var def = $q.defer();
+		    var res = this.getSYBContract().then(function(instance){
+	            instance.getUserAcceptedServiceOrders(function(err, res){
+	            	var pendingList = [];
+	            	for(var i = 0; i<res.length; i++){
+		            	instance.getService(res[i].c[0],function(err1, res2){
+		            		pendingList.push(res2);
+		            		if(pendingList.length == res.length){
+		            			def.resolve(pendingList);
+		            		}
+		            	})
+		            }
+	                //debugger;
+
+	            })
+           })
+		    return def.promise;
+		}
+
+		this.getUserDoneServiceOrders =function(){
+			var def = $q.defer();
+		    var res = this.getSYBContract().then(function(instance){
+	            instance.getUserDoneServiceOrders(function(err, res){
+	            	var pendingList = [];
+	            	for(var i = 0; i<res.length; i++){
+		            	instance.getService(res[i].c[0],function(err1, res2){
+		            		pendingList.push(res2);
+		            		if(pendingList.length == res.length){
+		            			def.resolve(pendingList);
+		            		}
+		            	})
+		            }
+	                //debugger;
+
+	            })
+           })
+		    return def.promise;
+		}
+
 		this.getUserPendingServiceOrders =function(){
 			var def = $q.defer();
 		    var res = this.getSYBContract().then(function(instance){

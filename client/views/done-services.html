@@ -1,0 +1,49 @@
+<div class="ui fixed inverted menu blueBg">
+        <div class="ui container">
+          <!--
+          <a href="#" class="header item">
+            <img class="logo" src="assets/images/logo.png">
+          </a>-->
+      
+          <a href="#" class="item">Explore</a>
+          <a href="#" class="item">Pending</a>
+          <a href="#" class="item">Done</a>
+          <a href="#" class="item">History</a>
+          <a ng-click="addEditService()" class="item">Add new</a>
+        </div>
+      </div>
+      
+      
+      
+      
+      
+      <div class="ui grid">
+        <div class="two wide column"></div>
+      
+        <div class="fourteen wide column">
+          <div>
+              <table>
+                  <thead>
+                          <td>Category</td>
+                          <td>From</td>
+                          <td>To</td>
+                          <td>Title</td>              
+                  </thead>
+                  <tbody>
+                      <tr ng-repeat="service in doneServices">
+                          <td>{{service[1]}}</td>
+                          <td>{{service[2]}}</td>
+                          <td>{{service[3]}}</td>
+                          <td>{{service[7]}}</td>
+                      </tr>
+                  </tbody>
+      
+              </table>
+              {{service}}
+          </div>
+      
+        </div>
+      </div>
+      <div class="two wide column"></div>
+      
+      

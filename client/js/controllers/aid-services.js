@@ -151,6 +151,28 @@ angular
             return icon
         }
     }])
+
+    .controller('DoneServicesController', ['$scope', 'SYBService', '$state', 'ContractService', function ($scope, SYBService, $state, ContractService) {
+        var res = ContractService.getUserDoneServiceOrders().then(function(res){
+            $scope.doneServices = res;
+        })
+ 
+    }])
+
+     .controller('HistoryServicesController', ['$scope', 'SYBService', '$state', 'ContractService', function ($scope, SYBService, $state, ContractService) {
+        var res = ContractService.getUserAcceptedServiceOrders().then(function(res){
+            $scope.historyServices = res;
+        })
+
+        $scope.onPay = function(service) {
+            debugger;
+            ContractService.payServiceOrder(id, recip, score).then(function(res) {
+                debugger;
+            })
+        }
+  
+    }])
+
     .controller('PendingServicesController', ['$scope', 'SYBService', '$state', 'ContractService', function ($scope, SYBService, $state, ContractService) {
        
 
