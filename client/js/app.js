@@ -1,8 +1,3 @@
-// Copyright IBM Corp. 2015. All Rights Reserved.
-// Node module: loopback-getting-started-intermediate
-// This file is licensed under the MIT License.
-// License text available at https://opensource.org/licenses/MIT
-
 angular
   .module('app', [
     'ui.router',
@@ -73,22 +68,21 @@ angular
   }])
   .run(['$rootScope', '$state', 'LoopBackAuth', 'AuthService', function($rootScope, $state, LoopBackAuth, AuthService) {
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
+			// check if user is already registered into blockchain
+			AuthService.isAuthenticated().then(function (res) {
+				if (!res) {
+					event.preventDefault(); //prevent current page from loading
 
-        // check if user is already registered into blockchain
-        AuthService.isAuthenticated().then(function(res) {
-          if (!res) {
-            event.preventDefault(); //prevent current page from loading
-    
-            $rootScope.returnTo = {
-              state: toState,
-              params: toParams
-            };
-    
-            $state.go('sign-up');
-            return;
-          } else {
-            $state.go(toState.name=='sign-up'?'index':toState.name); 
-          }
-        });
-    });
-  }]);
+					$rootScope.returnTo = {
+						state: toState,
+						params: toParams
+					};
+
+					$state.go('sign-up');
+					return;
+				} else {
+					$state.go(toState.name == 'sign-up' ? 'index' : toState.name);
+				}
+			});
+		});
+	}]);
