@@ -22,6 +22,11 @@
     "UserCreated": {
       "type": "string",
       "required": true
+    },
+    "ServiceType": {
+      "type": "number",
+      "required": true,
+      "default": 0
     }
   },
   "validations": [],

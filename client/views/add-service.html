@@ -1,0 +1,23 @@
+<form class="ui form" ng-submit="submitForm()">
+    <div class="field">
+        <label>Service name</label>
+        <input type="text" name="service-name" placeholder="Service name" ng-model="service.Name">
+    </div>
+    <div class="field">
+        <label>Service type</label>
+        <select
+            ng-model="service.ServiceType"
+            ng-options="service.Id as service.Name for service in serviceTypes"></select>
+    </div>
+    <div class="field">
+        <label>Service description</label>
+        <input type="text" name="service-description" placeholder="Service description" ng-model="service.Description">
+    </div>
+    <div class="field">
+        <label>Service price</label>
+        <input type="number" name="service-price" placeholder="Service description" step="0.01" ng-model="service.Price">
+    </div>
+    <input type="hidden" ng-model="service.Price">
+    <button class="ui button primary" type="submit">Submit</button>
+    <button ng-if="action=='Add'" class="ui button" type="button" ng-click="discard()">Discard</button>
+</form>
