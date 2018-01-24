@@ -16,3 +16,12 @@
     position: absolute;
     background: url('../assets/bg-pattern.png'), linear-gradient(to left,#7b4397,#dc2430);
 }
+
+.activeCategory{
+	background-color: #509CB2 !important;
+	color:#fff !important;
+}
+
+.active{
+	background-color: #509CB2 !important;
+}

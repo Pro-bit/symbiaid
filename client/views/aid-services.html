@@ -9,113 +9,68 @@
     <a href="#" class="item">Pending</a>
     <a href="#" class="item">Done</a>
     <a href="#" class="item">History</a>
-
-    <!--
-    <div class="ui simple dropdown item">
-      Dropdown <i class="dropdown icon"></i>
-      <div class="menu">
-        <a class="item" href="#">Link Item</a>
-        <a class="item" href="#">Link Item</a>
-        <div class="divider"></div>
-        <div class="header">Header Item</div>
-        <div class="item">
-          <i class="dropdown icon"></i>
-          Sub Menu
-          <div class="menu">
-            <a class="item" href="#">Link Item</a>
-            <a class="item" href="#">Link Item</a>
-          </div>
-        </div>
-        <a class="item" href="#">Link Item</a>
-      </div>
-    </div>-->
+    <a ng-click="addEditService()" class="item">Add new</a>
   </div>
 </div>
 
 
 
 <div class="ui fixed labeled icon menu" style="margin-top: 40px; display: flex; justify-content: center;">
-  <a class="item"  style="border-left:1px solid #E8E9E9"  ng-click="categoryFilter = 0">
+
+
+  <a class="item" style="border-left:1px solid #E8E9E9" ng-class="{'activeCategory':userFilter == undefined && categoryFilter == undefined}" ng-click="categoryFilter = undefined; userFilter = undefined">
+    <i class="grid layout icon redAid"></i>
+    All
+  </a>
+
+
+  <a class="item" ng-class="{'activeCategory':categoryFilter == 0}" ng-click="categoryFilter = 0; userFilter = undefined">
     <i class="home icon redAid"></i>
     House work
   </a>
-  <a class="item" ng-click="categoryFilter = 1">
+  <a class="item" ng-class="{'activeCategory':categoryFilter == 1}" ng-click="categoryFilter = 1; userFilter = undefined">
     <i class="tree icon redAid"></i>
     Landscaping
   </a>
-  <a class="item" ng-click="categoryFilter = 2">
+  <a class="item" ng-class="{'activeCategory':categoryFilter == 2}" ng-click="categoryFilter = 2; userFilter = undefined">
     <i class="comment outline icon redAid"></i>
     Socializing
   </a>
-  <a class="item" ng-click="categoryFilter = 3">
+  <a class="item" ng-class="{'activeCategory':categoryFilter == 3}" ng-click="categoryFilter = 3; userFilter = undefined">
     <i class="food icon redAid"></i>
     Food
   </a>
 
-  <a class="item" ng-click="categoryFilter = 4">
+  <a class="item" ng-class="{'activeCategory':categoryFilter == 4}" ng-click="categoryFilter = 4; userFilter = undefined">
     <i class="car icon redAid"></i>
     Transport
   </a>
 
-  <a class="item" ng-click="categoryFilter = ''">
-    <i class="grid layout icon redAid"></i>
-    All
+  <a class="item" ng-class="{'activeCategory':userFilter == userId && categoryFilter == undefined}" ng-click="categoryFilter = undefined; userFilter = userId">
+    <i class="user layout icon redAid"></i>
+    My services
   </a>
 </div>
 
 
 
 <div class="ui grid">
-  <!--
-  <div class="three wide column">
-    <div class="ui vertical inverted sticky menu fixed top" style="margin-top: 113px; background: #107896">
-      <div style="width: 400px; margin:0 auto">
-        <div class="item">
-          <div class="ui checkbox">
-            <input type="checkbox" name="filter1">
-            <label style="color: white; font-weight: bold;">Pomoč</label>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="ui checkbox">
-            <input type="checkbox" name="filter2">
-            <label style="color: white; font-weight: bold;">Druženje</label>
-          </div>
-        </div>  
-
-        <div class="item">
-          <div class="ui checkbox">
-            <input type="checkbox" name="filter3">
-            <label style="color: white; font-weight: bold;">Filter 3</label>
-          </div>
-        </div>  
-
-        <div class="item">
-          <div class="ui checkbox">
-            <input type="checkbox" name="filter4">
-            <label style="color: white; font-weight: bold;">Filter 4</label>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  -->
   <div class="two wide column"></div>
 
   <div class="fourteen wide column">
     <div class="ui cards" style="width: 100%; margin-top: 90px;">
-      <div class="card" ng-repeat="service in SYBServices  | filter: {Category:categoryFilter } track by $index ">
+      <div class="card" ng-repeat="service in SYBServices  | filter: {ServiceType:categoryFilter, UserCreated:userFilter } track by $index ">
         <div class="content">
-          <div class="right floated mini ui"><i class="{{getCategoryIcon(service.Category)}}  icon redAid"></i></div>
+          <div class="right floated mini ui"><i class="{{getServiceTypeIcon(service.ServiceType)}}  icon redAid"></i></div>
           <div class="header blueAid" ng-bind="service.Name"></div>
           <div class="meta" ng-bind="service.Price + ' eth'"></div>
           <div class="description" ng-bind="service.Description | limitTo: 100"></div>
         </div>
         <div class="extra content">
           <div class="ui two buttons">
-            <div class="ui basic green button">Buy</div>
-            <div class="ui basic blue button" ng-click="readMore(service)">Read more</div>
+            <div ng-if="!showEdit(service.UserCreated)" ng-click="buyService(service)" class="ui basic green button"><i class="bitcoin icon green"></i>Buy</div>
+            <div ng-if="showEdit(service.UserCreated)" ng-click="addEditService(service.id)" class="ui basic green button"> <i class="edit icon green"></i>Edit</div>
+            <div class="ui basic blue button" ng-click="readMore(service)"><i class="info icon blue"></i> Read more</div>
           </div>
         </div>
       </div>
@@ -125,14 +80,20 @@
 <div class="two wide column"></div>
 
 
-<div class="ui tiny modal">
-  <div class="header blueAid">{{selectedService.Name}} <i style="float:right" class="{{getCategoryIcon(selectedService.Category)}}  icon redAid"></i> </div>
+<div class="ui tiny modal showMore">
+  <div class="header blueAid">{{selectedService.Name}} <i style="float:right" class="{{getServiceTypeIcon(selectedService.ServiceType)}}  icon redAid"></i> </div>
   <div class="content">
     <b ng-bind="selectedService.Price + ' eth'"></b>
 
     <div  ng-bind="selectedService.Description"></div>
     <br />
-    <button class="ui green button">Buy</button>
+    <button class="ui ok green button">Buy</button>
   </div>
 </div>
 
+<div class="ui tiny modal addService">
+  <div class="header blueAid"><i class="add icon redAid"></i> Service  </div>
+  <div class="content">
+    <div ng-include="'../../views/add-service.html'"></div>
+  </div>
+</div>

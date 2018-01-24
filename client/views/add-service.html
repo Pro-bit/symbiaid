@@ -11,13 +11,14 @@
     </div>
     <div class="field">
         <label>Service description</label>
-        <input type="text" name="service-description" placeholder="Service description" ng-model="service.Description">
+        <!--<input type="text" name="service-description" placeholder="Service description" ng-model="service.Description"> -->
+        <textarea name="service-description" placeholder="Service description" ng-model="service.Description"></textarea>
     </div>
     <div class="field">
         <label>Service price</label>
         <input type="number" name="service-price" placeholder="Service description" step="0.01" ng-model="service.Price">
     </div>
     <input type="hidden" ng-model="service.Price">
-    <button class="ui button primary" type="submit">Submit</button>
-    <button ng-if="action=='Add'" class="ui button" type="button" ng-click="discard()">Discard</button>
+    <button class="ui button primary ok" type="submit">Submit</button>
+    <button ng-if="action=='Add'" class="ui cancel button " type="button" ng-click="discard()">Discard</button>
 </form>
