@@ -70,7 +70,7 @@ angular
 				});
 				
 
-				
+				debugger;
 				instance.createServiceOrder(service.id, service.ServiceType, service.UserCreated, service.Name, service.Description, service.Price, function(err,res){
 
 					debugger;

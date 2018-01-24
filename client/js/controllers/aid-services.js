@@ -154,7 +154,7 @@ angular
 
     .controller('DoneServicesController', ['$scope', 'SYBService', '$state', 'ContractService', function ($scope, SYBService, $state, ContractService) {
         var res = ContractService.getUserDoneServiceOrders().then(function(res){
-            $scope.doneServices = res;
+            $scope.offeredServices = res;
         })
  
     }])
@@ -164,13 +164,7 @@ angular
             $scope.historyServices = res;
         })
 
-        $scope.onPay = function(service) {
-            debugger;
-            ContractService.payServiceOrder(id, recip, score).then(function(res) {
-                debugger;
-            })
-        }
-  
+ 
     }])
 
     .controller('PendingServicesController', ['$scope', 'SYBService', '$state', 'ContractService', function ($scope, SYBService, $state, ContractService) {
@@ -179,9 +173,22 @@ angular
         return ["House work", "Landscaping", "Socializing", "Food", "Transport"][id];
        }
 
-       var res = ContractService.getUserPendingServiceOrders().then(function(res){
-            $scope.pendingServices = res;
+       ContractService.getUserPendingServiceOrders().then(function(res){
+            $scope.offeredServices = res;
        })
+
+        ContractService.getUserAcceptedServiceOrders().then(function(res){
+            $scope.orderedServices = res;
+       })
+
+                $scope.onPay = function(service) {
+            debugger;
+            ContractService.payServiceOrder(id, recip, score).then(function(res) {
+                debugger;
+            })
+        }
+
+
 
     }])
   

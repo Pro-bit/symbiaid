@@ -76,12 +76,6 @@ angular
         controller: 'DoneServicesController',
         authenticate: true
       })
-      .state('history-services', {
-        url: '/history-services',
-        templateUrl: 'views/history-services.html',
-        controller: 'HistoryServicesController',
-        authenticate: true
-      })
     $urlRouterProvider.otherwise('/');
   }])
   .run(['$rootScope', '$state', 'LoopBackAuth', 'AuthService', function($rootScope, $state, LoopBackAuth, AuthService) {
