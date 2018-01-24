@@ -118,10 +118,11 @@ angular
             ContractService.getAvgScore(service).then(function(res){
                 $scope.selectedService.avgScore = res[0]["c"][0];
                 $scope.selectedService.numOfScores = res[1]["c"][0];
+
+                $(".rating").rating({ initialRating: $scope.selectedService.avgScore }).rating('disable');
             })
 
             $('.tiny.modal.showMore').modal('show');
-            $(".rating").rating('disable');
         }
 
 
@@ -160,6 +161,10 @@ angular
     }])
 
     .controller('DoneServicesController', ['$scope', 'SYBService', '$state', 'ContractService', function ($scope, SYBService, $state, ContractService) {
+        $scope.categoryName = function(id){
+            return ["House work", "Landscaping", "Socializing", "Food", "Transport"][id];
+           }
+        
         ContractService.getUserDoneServiceOrders().then(function(res){
             $scope.offeredServices = res;
         })
@@ -176,14 +181,6 @@ angular
             console.log('ordered');
             console.log(res);
        })
- 
-    }])
-
-     .controller('HistoryServicesController', ['$scope', 'SYBService', '$state', 'ContractService', function ($scope, SYBService, $state, ContractService) {
-        var res = ContractService.getUserAcceptedServiceOrders().then(function(res){
-            $scope.historyServices = res;
-        })
-
  
     }])
 

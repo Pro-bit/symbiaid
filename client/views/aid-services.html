@@ -69,7 +69,7 @@
         </div>
         <div class="extra content">
           <div class="ui two buttons">
-            <div ng-if="!showEdit(service.UserCreated)" ng-click="buyService(service)" class="ui basic green button"><i class="bitcoin icon green"></i>Buy</div>
+            <div ng-if="!showEdit(service.UserCreated)" ng-click="buyService(service)" class="ui basic green button"><i class="bitcoin icon green"></i>Order</div>
             <div ng-if="showEdit(service.UserCreated)" ng-click="addEditService(service.id)" class="ui basic green button"> <i class="edit icon green"></i>Edit</div>
             <div class="ui basic blue button" ng-click="readMore(service)"><i class="info icon blue"></i> Read more</div>
           </div>
@@ -87,7 +87,7 @@
   <div class="content">
     <b ng-bind="selectedService.Price + ' eth'"></b>
     <br />
-    <b><div class="ui star rating" data-rating="3" data-max-rating="5"></div> </b>
+    <b><div class="ui star rating" data-max-rating="5"></div> </b>
     <br />
     <b> Number of scores: {{selectedService.numOfScores}} </b>
 
@@ -95,7 +95,7 @@
 
     <div ng-bind="selectedService.Description"></div>
     <br />
-    <button ng-if="!showEdit(selectedService.UserCreated)"   class="ui ok green button">Buy</button>
+    <button ng-if="!showEdit(selectedService.UserCreated)"   class="ui ok green button">Order</button>
   </div>
 </div>
 
